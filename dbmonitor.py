@@ -1,8 +1,6 @@
 # TODO:
 
 # - update privileges on qaAdmin, or create new user to do inserts
-# - insert innodb status data with db1 connection
-# - remove records older than 30 days on script execution
 
 import argparse
 import time
@@ -100,3 +98,30 @@ def insert_innodb_status_info():
 	conn.commit()
 	cur.close()
 	conn.close()
+
+def remove_old_aborted_records():
+	query = "DELETE FROM Aborts WHERE accessed_at < DATE_SUB(NOW(), INTERVAL 30 DAY);"
+	conn = connect(db1_info)
+	cur = conn.cursor()
+	cur.execute(query)
+	conn.commit()
+	cur.close()
+	conn.close()
+
+def remove_old_innodb_records():
+	query = "DELETE FROM InnoDBInfo WHERE accessed_at < DATE_SUB(NOW(), INTERVAL 30 DAY);"
+	conn = connect(db1_info)
+	cur = conn.cursor()
+	cur.execute(query)
+	conn.commit()
+	cur.close()
+	conn.close()
+
+
+# remove all old records
+remove_old_aborted_records()
+remove_old_innodb_records()
+
+# insert new records
+insert_aborted_status_info()
+insert_innodb_status_info()
