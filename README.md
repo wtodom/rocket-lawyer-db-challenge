@@ -100,3 +100,18 @@ if they aren't provided. By default, `port` is assigned to 3306 and `db` is
 "qanda" (the values I used locally during development).
 
 Use the `-h` or `--help` flag for more information about command-line arguments.
+
+
+#### Tests
+
+Tests can be run with `python3 tests.py`. Optionally add the
+
+
+#### Dump Info
+
+`schema.sql` contains a schema-only dump, and `db_dump.sql` contains a full dump
+after running the script a couple of times and also manually playing with the
+data a little during testing.
+
+The full dump contains a couple of table drops from when I adjusted the schema
+during testing.
