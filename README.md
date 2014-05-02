@@ -8,7 +8,7 @@ process.
 ## Challenge 1 - Schema Design
 
 
-##### Schema Diagram:
+#### Schema Diagram:
 
 ![schema](http://i.imgur.com/hcdVvtG.png)
 
@@ -47,11 +47,11 @@ granted all privileges. The grants look like this:
 #### Users and Grants
 
 A new user was created for retrieving the status data and was only granted the select
-privilege. It's grants look like this:
+privilege. Its grants look like this:
 
 	mysql> show grants for Logger;
 	+------------------------------------------------------+
-	| Grants for Logger@localhost                          |
+	| Grants for Logger@%                                  |
 	+------------------------------------------------------+
 	| GRANT USAGE ON *.* TO 'Logger'@'%'                   |
 	| GRANT SELECT ON `qanda`.`innodbinfo` TO 'Logger'@'%' |
