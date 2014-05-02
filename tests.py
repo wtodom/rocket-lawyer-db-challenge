@@ -43,8 +43,12 @@ class TestDBMonitor(unittest.TestCase):
 		self.assertTrue(data[0][0] == "Aborted_clients")
 		self.assertTrue(data[1][0] == "Aborted_connects")
 
-	def test_get_db2_status(self):
-		pass
+	def test_get_aborted_status_data(self):
+		data = get_aborted_status_data()
+
+		self.assertEqual(len(data), 2)
+		self.assertTrue(data[0][0] == "Aborted_clients")
+		self.assertTrue(data[1][0] == "Aborted_connects")
 
 	def test_get_db1_old_records(self):
 		pass

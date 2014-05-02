@@ -1,11 +1,11 @@
 # TODO:
 
 # - update privileges on qaAdmin, or create new user to do inserts
-# - get data from show status: "show status like '%aborted%';" on db2
-# - get data from show status: "show status like '%innodb%';" on db2
+# - insert innodb status data with db1 connection
 # - remove records older than 30 days on script execution
 
 import argparse
+import time
 import getpass
 import pymysql
 
@@ -34,6 +34,9 @@ def get_db1_info():
 		conn_info[1] = int(conn_info[1])
 	return conn_info
 
+db1_info = get_db1_info()
+db2_info = [args.host, 3306, args.user, args.password, args.database]
+
 def connect(conn_info):
 	"""
 	Expects a list of the form:
@@ -46,9 +49,6 @@ def connect(conn_info):
 		passwd=conn_info[3],
 		db=conn_info[4]
 	)
-
-db1_info = get_db1_info()
-db2_info = [args.host, 3306, args.user, args.password, args.database]
 
 def get_status_data(conn_info, like_string):
 	"""
@@ -69,3 +69,20 @@ def get_status_data(conn_info, like_string):
 	conn.close()
 
 	return rows
+
+def get_aborted_status_data():
+	return get_status_data(db2_info, "%aborted%")
+
+def get_innodb_status_data():
+	return get_status_data(db2_info, "%innodb%")
+
+def insert_aborted_status_info():
+	data = get_aborted_status_data()
+	timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+	query = "INSERT INTO Aborts (accessed_at, aborted_clients, aborted_connects) values ('{}', '{}', '{}');".format(timestamp, data[0][1], data[1][1])
+	conn = connect(db1_info)
+	cur = conn.cursor()
+	cur.execute(query)
+	conn.commit()
+	cur.close()
+	conn.close()
