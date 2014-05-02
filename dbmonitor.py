@@ -1,7 +1,3 @@
-# TODO:
-
-# - update privileges on qaAdmin, or create new user to do inserts
-
 import argparse
 import time
 import getpass
@@ -11,6 +7,7 @@ import pymysql
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--host', help='db2\'s host ip address')
+parser.add_argument('--port', help='db2\'s host port', default=3306)
 parser.add_argument('--user', help='user to login to db2 as')
 parser.add_argument('--password', help='password to login to db2 with')
 parser.add_argument('--database', help='database connect to for db2', default='qanda')
@@ -33,7 +30,7 @@ def get_db1_info():
 	return conn_info
 
 db1_info = get_db1_info()
-db2_info = [args.host, 3306, args.user, args.password, args.database]
+db2_info = [args.host, args.port, args.user, args.password, args.database]
 
 def connect(conn_info):
 	"""

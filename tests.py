@@ -50,8 +50,5 @@ class TestDBMonitor(unittest.TestCase):
 		self.assertTrue(data[0][0] == "Aborted_clients")
 		self.assertTrue(data[1][0] == "Aborted_connects")
 
-	def test_get_db1_old_records(self):
-		pass
-
 if __name__ == '__main__':
 	unittest.main()
