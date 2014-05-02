@@ -9,6 +9,7 @@ CREATE TABLE if not exists Aborts (
 
 CREATE TABLE if not exists InnoDBInfo (
 	id integer(11) NOT NULL auto_increment PRIMARY KEY,
+	accessed_at datetime NOT NULL,
 	buffer_pool_dump_status varchar(50) NOT NULL,
 	buffer_pool_load_status varchar(50) NOT NULL,
 	buffer_pool_pages_data integer(11) NOT NULL,
