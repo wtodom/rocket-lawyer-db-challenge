@@ -20,6 +20,29 @@ class TestDBMonitor(unittest.TestCase):
 		self.assertEqual(conn_info[3], passwd)
 		self.assertEqual(conn_info[4], db)
 
+	def test_connect(self):
+		query = "SELECT 1 + 1;"
+		expected = 2
+
+		conn_info = ["127.0.0.1", 3306, "qaAdmin", "qaadminpass123", "qanda"]
+		conn = connect(conn_info)
+		cur = conn.cursor()
+		cur.execute(query)
+		res = cur.fetchone()[0]
+
+		cur.close()
+		conn.close()
+
+		self.assertEqual(res, expected)
+
+	def test_get_status_data(self):
+		conn_info = ["127.0.0.1", 3306, "qaAdmin", "qaadminpass123", "qanda"]
+		data = get_status_data(conn_info, "%aborted%")
+
+		self.assertEqual(len(data), 2)
+		self.assertTrue(data[0][0] == "Aborted_clients")
+		self.assertTrue(data[1][0] == "Aborted_connects")
+
 	def test_get_db2_status(self):
 		pass
 
