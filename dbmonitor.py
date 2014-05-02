@@ -86,3 +86,17 @@ def insert_aborted_status_info():
 	conn.commit()
 	cur.close()
 	conn.close()
+
+def insert_innodb_status_info():
+	data = get_innodb_status_data()
+	timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+	query = """
+			INSERT INTO InnoDBInfo (accessed_at,buffer_pool_dump_status,buffer_pool_load_status,buffer_pool_pages_data,buffer_pool_bytes_data,buffer_pool_pages_dirty,buffer_pool_bytes_dirty,buffer_pool_pages_flushed,buffer_pool_pages_free,buffer_pool_pages_misc,buffer_pool_pages_total,buffer_pool_read_ahead_rnd,buffer_pool_read_ahead,buffer_pool_read_ahead_evicted,buffer_pool_read_requests,buffer_pool_reads,buffer_pool_wait_free,buffer_pool_write_requests,data_fsyncs,data_pending_fsyncs,data_pending_reads,data_pending_writes,data_read,data_reads,data_writes,data_written,dblwr_pages_written,dblwr_writes,have_atomic_builtins,log_waits,log_write_requests,log_writes,os_log_fsyncs,os_log_pending_fsyncs,os_log_pending_writes,os_log_written,page_size,pages_created,pages_read,pages_written,row_lock_current_waits,row_lock_time,row_lock_time_avg,row_lock_time_max,row_lock_waits,rows_deleted,rows_inserted,rows_read,rows_updated,num_open_files,truncated_status_writes,available_undo_logs)
+			VALUES ('{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}','{}');
+			""".format(timestamp,data[0][1],data[1][1],data[2][1],data[3][1],data[4][1],data[5][1],data[6][1],data[7][1],data[8][1],data[9][1],data[10][1],data[11][1],data[12][1],data[13][1],data[14][1],data[15][1],data[16][1],data[17][1],data[18][1],data[19][1],data[20][1],data[21][1],data[22][1],data[23][1],data[24][1],data[25][1],data[26][1],data[27][1],data[28][1],data[29][1],data[30][1],data[31][1],data[32][1],data[33][1],data[34][1],data[35][1],data[36][1],data[37][1],data[38][1],data[39][1],data[40][1],data[41][1],data[42][1],data[43][1],data[44][1],data[45][1],data[46][1],data[47][1],data[48][1],data[49][1],data[50][1])
+	conn = connect(db1_info)
+	cur = conn.cursor()
+	cur.execute(query)
+	conn.commit()
+	cur.close()
+	conn.close()
