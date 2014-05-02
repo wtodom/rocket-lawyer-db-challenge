@@ -1,21 +1,13 @@
-"""
-Dependencies:
-	bcrypt - https://pypi.python.org/pypi/bcrypt/1.0.2
-		Usage:
-			>>> import bcrypt
-			>>> password = b"super secret password"
-			>>> # Hash a password for the first time, with a randomly-generated salt
-			>>> hashed = bcrypt.hashpw(password, bcrypt.gensalt())
-			>>> # Check that a unhashed password matches one that has previously been
-			>>> #   hashed
-			>>> if bcrypt.hashpw(password, hashed) == hashed:
-			...     print("It Matches!")
-			... else:
-			...     print("It Does not Match :(")
+# TODO:
 
-"""
+# - create user2 (only needs select privileges)
+# - update privileges on qaAdmin, or create new user to do inserts
+# - get conn info from prompt
+# - get conn info from command line
+# - get data from show status: "show status like '%aborted%';" on db2
+# - get data from show status: "show status like '%innodb%';" on db2
+# - remove records older than 30 days on script execution
 
-import bcrypt
 import pymysql
 
 
@@ -24,4 +16,3 @@ def get_db1_info():
 		conn_info = [line.rstrip().split("=")[1] for line in f.readlines()]
 		conn_info[1] = int(conn_info[1])
 	return conn_info
-
