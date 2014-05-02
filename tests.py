@@ -1,16 +1,24 @@
-import bcrypt
-import dbmonitor
-import pymysql
+from dbmonitor import *
+
 import unittest
 
 
 class TestDBMonitor(unittest.TestCase):
 
-	def test_db_connect(self):
-		pass
+	def test_get_db1_info(self):
+		host_ip="127.0.01"
+		port=3306
+		user="qaAdmin"
+		passwd="qaadminpass123"
+		db="qanda"
 
-	def test_db_disconnect(self):
-		pass
+		conn_info = get_db1_info()
+
+		self.assertEqual(conn_info[0], host_ip)
+		self.assertEqual(conn_info[1], port)
+		self.assertEqual(conn_info[2], user)
+		self.assertEqual(conn_info[3], passwd)
+		self.assertEqual(conn_info[4], db)
 
 	def test_get_db2_status(self):
 		pass
