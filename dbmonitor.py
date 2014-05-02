@@ -7,10 +7,11 @@ import pymysql
 parser = argparse.ArgumentParser()
 
 parser.add_argument('--host', help='db2\'s host ip address')
-parser.add_argument('--port', help='db2\'s host port', default=3306)
+parser.add_argument('--port', help='db2\'s host port (default=3306)', default=3306)
 parser.add_argument('--user', help='user to login to db2 as')
 parser.add_argument('--password', help='password to login to db2 with')
-parser.add_argument('--database', help='database connect to for db2', default='qanda')
+parser.add_argument('--database',
+	help='database connect to for db2 (default=\'qanda\')', default='qanda')
 
 args = parser.parse_args()
 
@@ -74,7 +75,10 @@ def get_innodb_status_data():
 def insert_aborted_status_info():
 	data = get_aborted_status_data()
 	timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-	query = "INSERT INTO Aborts (accessed_at, aborted_clients, aborted_connects) values ('{}', '{}', '{}');".format(timestamp, data[0][1], data[1][1])
+	query = """
+			INSERT INTO Aborts (accessed_at, aborted_clients, aborted_connects)
+			VALUES ('{}', '{}', '{}');
+			""".format(timestamp, data[0][1], data[1][1])
 	conn = connect(db1_info)
 	cur = conn.cursor()
 	cur.execute(query)
