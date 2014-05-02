@@ -104,7 +104,7 @@ Use the `-h` or `--help` flag for more information about command-line arguments.
 
 #### Tests
 
-Tests can be run with `python3 tests.py`. Optionally add the
+Tests can be run with `python3 tests.py`.
 
 
 #### Dump Info
