@@ -3,7 +3,7 @@ use qanda;
 CREATE TABLE if not exists Aborts (
 	id integer(11) NOT NULL auto_increment PRIMARY KEY,
 	accessed_at datetime NOT NULL,
-	aborted_clients varchar(11) NOT NULL UNIQUE,
+	aborted_clients varchar(11) NOT NULL,
 	aborted_connects varchar(11) NOT NULL
 ) ENGINE = INNODB ;
 
